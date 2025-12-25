@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hsvdg\OneDrive\Documents\VSCode_Projects\Sensor_Simulator\build\CMakeFiles\e90986497fc22c778c4dd618652366d1\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{B105C65F-3782-3DCF-8DA3-22125E3D4ABA}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

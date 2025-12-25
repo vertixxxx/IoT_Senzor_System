@@ -1,0 +1,3 @@
+C:/Users/hsvdg/OneDrive/Documents/VSCode_Projects/Sensor_Simulator/build/CMakeFiles/SenzorApp.dir
+C:/Users/hsvdg/OneDrive/Documents/VSCode_Projects/Sensor_Simulator/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/hsvdg/OneDrive/Documents/VSCode_Projects/Sensor_Simulator/build/CMakeFiles/ZERO_CHECK.dir

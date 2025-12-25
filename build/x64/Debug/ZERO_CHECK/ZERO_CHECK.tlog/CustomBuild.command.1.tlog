@@ -1,0 +1,10 @@
+^C:\USERS\HSVDG\ONEDRIVE\DOCUMENTS\VSCODE_PROJECTS\SENSOR_SIMULATOR\BUILD\CMAKEFILES\E90986497FC22C778C4DD618652366D1\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/hsvdg/OneDrive/Documents/VSCode_Projects/Sensor_Simulator -BC:/Users/hsvdg/OneDrive/Documents/VSCode_Projects/Sensor_Simulator/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/hsvdg/OneDrive/Documents/VSCode_Projects/Sensor_Simulator/build/IoTSimulator.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
