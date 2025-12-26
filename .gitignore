@@ -1,0 +1,31 @@
+# Ignora folderul de build 
+build/
+/out/
+
+# Ignora folderul urias cu librarii (se instaleaza separat)
+vcpkg/
+vcpkg_installed/
+
+# Ignora setarile specifice utilizatorului VS Code
+.vscode/
+
+# Ignora executabile si fisiere temporare C++
+*.exe
+*.obj
+*.pdb
+*.ilk
+
+# --- JAVA & INTELLIJ IGNORES ---
+# Ignoră folderul de build Maven
+target/
+backend/target/
+
+# Ignoră fișierele de configurare IntelliJ 
+.idea/
+*.iml
+*.iws
+
+# Ignoră fișierele compilate Java
+*.class
+*.jar
+*.war

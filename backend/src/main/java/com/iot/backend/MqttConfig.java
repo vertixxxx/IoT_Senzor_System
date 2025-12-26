@@ -9,17 +9,19 @@ import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannel
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 
 @Configuration
 public class MqttConfig {
 
-    // 1. Canalul (The Pipe) - Aici curg mesajele primite
+    // 1. Canalul - Aici curg mesajele primite
     @Bean
     public MessageChannel mqttInputChannel() {
         return new DirectChannel();
     }
 
-    // 2. Adaptorul (The Listener) - Se conectează la Mosquitto
+    // 2. Adaptorul - Se conectează la Mosquitto
     @Bean
     public MessageProducer inbound() {
         // "tcp://localhost:1883" -> Adresa Brokerului
@@ -34,14 +36,28 @@ public class MqttConfig {
         return adapter;
     }
 
-    // 3. Handler-ul (The Processor) - Ce facem cu mesajul?
+    // 3. Handler-ul
     @Bean
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public MessageHandler handler() {
         return message -> {
-            // Aici ajunge mesajul brut (JSON-ul)
             String payload = (String) message.getPayload();
-            System.out.println("Am primit mesaj: " + payload);
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            try {
+                SensorData data = mapper.readValue(payload, SensorData.class);
+
+                System.out.println(data.toString());
+
+                if (data.getValue() > 24.0) {
+                    System.out.println(" ⚠️ ALERTA: Temperatura ridicata");
+                }
+
+            } catch (IOException e) {
+                System.err.println("Nu am putut citi JSON-ul: " + e.getMessage());
+            }
         };
     }
 }
+
