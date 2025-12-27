@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>IoT Dashboard - Temperatura Live</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 20px; background-color: #f4f4f9; }
+        .container { width: 80%; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌡️ Monitorizare Temperatură Live</h1>
+    <canvas id="tempChart"></canvas>
+</div>
+
+<script>
+    // 1. Configurarea Graficului
+    const ctx = document.getElementById('tempChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line', // Tipul graficului: Linie
+        data: {
+            labels: [], // Axa X (Timpul) - se va popula automat
+            datasets: [{
+                label: 'Temperatura (°C)',
+                data: [], // Axa Y (Valorile) - se va popula automat
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderWidth: 2,
+                tension: 0.4 // Face linia puțin curbată (mai estetic)
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: false } // Nu forțăm să înceapă de la 0, ca să vedem variațiile mici
+            },
+            animation: false // Oprim animația ca să nu "sară" graficul la fiecare update
+        }
+    });
+
+    // 2. Funcția care cere datele de la Java (Backend)
+    async function fetchData() {
+        try {
+            // Cerem datele de la API-ul creat de tine
+            const response = await fetch('/api/sensors');
+            const data = await response.json();
+
+            // Golim graficul vechi
+            chart.data.labels = [];
+            chart.data.datasets[0].data = [];
+
+            // Adăugăm datele noi
+            data.forEach(item => {
+                // Convertim timestamp-ul în oră lizibilă (HH:mm:ss)
+                const date = new Date(item.timestamp);
+                const timeString = date.toLocaleTimeString();
+
+                chart.data.labels.push(timeString);
+                chart.data.datasets[0].data.push(item.value);
+            });
+
+            // Desenăm din nou graficul
+            chart.update();
+
+        } catch (error) {
+            console.error("Eroare la preluarea datelor:", error);
+        }
+    }
+
+    // 3. Pornim actualizarea automată (la fiecare 2 secunde)
+    setInterval(fetchData, 2000);
+
+    // Facem și o primă încărcare imediat
+    fetchData();
+</script>
+</body>
+</html>
